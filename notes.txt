@@ -23,3 +23,67 @@ const fs = require("fs")
 const input = process.argv;
 
 fs.writeFileSync(input[2], input[3])
+
+// Express js basic GET route
+
+const express = require("express")
+
+const app = express()
+
+app.get("/",(req, res) => {
+    res.send("hello there")
+})
+
+app.get("/about",(req, res) => {
+    res.send("hello there, from about page")
+})
+
+app.listen(5000, () => {
+    console.log("Server running")
+})
+
+// MIDDLEWARES
+
+// application level route
+// router level route
+// error-handling route
+// built in MIDDLEWARES
+// third party middleware
+
+module.exports = filterRoute = (req, res, next) => {
+    if(!req.query.age){
+        res.send("Please Provide age")
+    } else if(req.query.age < 18){
+        res.send("You are not allowed to access this page")
+    } else {
+        next()
+    }
+}
+
+const express = require("express")
+
+const app = express()
+
+const filterRoute = (req, res, next) => {
+    if(!req.query.age){
+        res.send("Please Provide age")
+    } else if(req.query.age < 18){
+        res.send("You are not allowed to access this page")
+    } else {
+        next()
+    }
+}
+
+app.use(filterRoute)
+
+app.get("/",(req, res) => {
+    res.send("Welcome to home page")
+})
+
+app.get("/user",(req, res) => {
+    res.send("helle user")
+})
+
+app.listen(5000, () => {
+    console.log("Server running")
+})
